@@ -35,9 +35,8 @@ def create_app(test_config=None):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     return response
-
   
-  #@TODO: Create an endpoint to handle GET requests for all available categories.
+  #DONE: Create an endpoint to handle GET requests for all available categories.
   @app.route('/categories', methods=['GET'])
   def get_categories():
     categories = Category.query.order_by(Category.id).all()
@@ -52,11 +51,9 @@ def create_app(test_config=None):
     return jsonify({
       "success": True,
       "categories": curr_categories
-      #check what else needs to be returned
     })
 
-  
-  #@TODO: 
+  #@DONE: 
   #Create an endpoint to handle GET requests for questions, 
   #including pagination (every 10 questions). 
   #This endpoint should return a list of questions, 
@@ -68,22 +65,53 @@ def create_app(test_config=None):
   @app.route('/questions', methods=['GET'])
   def get_questions():
     selection = Question.query.order_by(Question.id).all()
-    current_questions = paginate_questions(request, selection)
+    curr_questions = paginate_questions(request, selection)
+    categories = Category.query.order_by(Category.id).all()
+    curr_categories = {}
 
-    if len(current_questions) == 0:
+    for category in categories:
+      curr_categories[category.id] = category.type
+
+    if len(curr_categories) == 0:
+      abort(404)
+
+    if len(curr_questions) == 0:
       abort(404)
     
-    #return jsonify({
-
-    #})
+    return jsonify({
+      "success": True,
+      "categories": curr_categories,
+      "questions": curr_questions,
+      "total_questions": len(Question.query.all())
+    })
 
   #@TODO: 
   #Create an endpoint to DELETE question using a question ID. 
   #TEST: When you click the trash icon next to a question, the question will be removed.
   #This removal will persist in the database and when you refresh the page. 
   
-  #@app.route('/questions??', methods=['DELETE'])
+  @app.route('/questions/<int:question_id>', methods=['DELETE'])
+  def delete_question(question_id):
+    try:
+      question = Question.query.filter(Question.id == question_id).one_or_none()
 
+      if question is None:
+        abort(404)
+
+      question.delete()
+      selection = Question.query.order_by(Question.id).all()
+      curr_questions = paginate_questions(request, selection)
+
+      return jsonify({
+        "success": True,
+        "deleted": question_id,
+        "categories": curr_categories,
+        "questions": curr_questions,
+        "total_questions": len(Question.query.all())
+      })
+    
+    except:
+      abort(422)
 
   #@TODO: 
   #Create an endpoint to POST a new question, 
