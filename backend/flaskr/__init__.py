@@ -146,7 +146,7 @@ def create_app(test_config=None):
     except:
       abort(422)
 
-  #@TODO: 
+  #@DONE: 
   #Create a POST endpoint to get questions based on a search term. 
   #It should return any questions for whom the search term 
   #is a substring of the question. 
@@ -154,8 +154,23 @@ def create_app(test_config=None):
   #only question that include that string within their question. 
   #Try using the word "title" to start. 
   
-  #@app.route('/questions??', methods=['POST'])
+  @app.route('/questions/search', methods=['POST'])
+  def search():
+    try:
+      search_form = request.get_json()
+      search_term = search_form.get('searchTerm', None)
+      
+      selection = Question.query.order_by(Question.id).filter(Question.question.ilike(f'%{search_term}%'))
+      curr_questions = paginate_questions(request, selection)
 
+      return jsonify({
+        "success": True,
+        "questions": curr_questions,
+        "total_questions": len(selection.all())
+      })
+
+    except:
+      abort(422)
   
   #@TODO: 
   #Create a GET endpoint to get questions based on category. 
@@ -163,9 +178,22 @@ def create_app(test_config=None):
   #categories in the left column will cause only questions of that 
   #category to be shown. 
   
-  #@app.route('/questions??', methods=['GET'])
+  @app.route('/categories/<int:cat_id>/questions', methods=['GET'])
+  def category_list(cat_id):
+    try:
+      cat_select = Category.query.filter_by(Category.id == cat_id).one_or_none()
+      selection = Question.query.filter_by(Question.category == cat_id).all()
+      curr_questions = paginate_questions(request, selection)
+      #error...try again
+      return jsonify({
+        "success": True,
+        "questions": curr_questions,
+        "total_questions": len(selection.all()),
+        "current_category": cat_select.type
+      })
 
-
+    except:
+      abort(422)
   
   #@TODO: 
   #Create a POST endpoint to get questions to play the quiz. 
