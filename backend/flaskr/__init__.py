@@ -172,7 +172,7 @@ def create_app(test_config=None):
     except:
       abort(422)
   
-  #@TODO: 
+  #@DONE: 
   #Create a GET endpoint to get questions based on category. 
   #TEST: In the "List" tab / main screen, clicking on one of the 
   #categories in the left column will cause only questions of that 
@@ -181,14 +181,14 @@ def create_app(test_config=None):
   @app.route('/categories/<int:cat_id>/questions', methods=['GET'])
   def category_list(cat_id):
     try:
-      cat_select = Category.query.filter_by(Category.id == cat_id).one_or_none()
-      selection = Question.query.filter_by(Question.category == cat_id).all()
+      cat_select = Category.query.filter(Category.id == cat_id).one_or_none()
+      selection = Question.query.filter(Question.category == cat_id).all()
       curr_questions = paginate_questions(request, selection)
-      #error...try again
+      
       return jsonify({
         "success": True,
         "questions": curr_questions,
-        "total_questions": len(selection.all()),
+        "total_questions": len(selection),
         "current_category": cat_select.type
       })
 
@@ -204,7 +204,9 @@ def create_app(test_config=None):
   #one question at a time is displayed, the user is allowed to answer
   #and shown whether they were correct or not. 
   
-  #@app.route('/questions??', methods=['POST'])
+  #@app.route('/quiz', methods=['POST'])
+  #def play_quiz():
+
 
 
   #@DONE:Create error handlers for all expected errors 
