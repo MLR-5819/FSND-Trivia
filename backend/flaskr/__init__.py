@@ -205,7 +205,27 @@ def create_app(test_config=None):
   #and shown whether they were correct or not. 
   
   #@app.route('/quiz', methods=['POST'])
-  #def play_quiz():
+  def play_quiz():
+    try:
+      data = request.get_json()
+      previous_questions = data.get('previous_questions', None)
+      quiz_category = data.get('quiz_category', None)
+
+      if quiz_category == 0:
+        questions = Questions.query.all()
+      else:
+        questions = Question.query.filter(Question.category == quiz_category['id']).all()
+
+      #randquestion
+
+
+      return jsonify ({
+        "success": True,
+        "question": X
+      })
+
+    except:
+      abort(422)
 
 
 
