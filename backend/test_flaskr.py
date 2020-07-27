@@ -94,13 +94,35 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Unprocessable')
     
     def test_post_new_question(self):
-         res = 
+        new_question = {
+            'question': 'new question',
+            'answer': 'new answer',
+            'difficulty': 1,
+            'category': 1
+        } 
+         
+        res = self.client().post('/questions', json = new_question)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
 
 
     def test_422_failed_post_new_question(self):
-        res = 
-    
+        new_question = {
+             'question': '',
+             'answer': 'new answer',
+             'difficulty': '',
+             'category': 1
+         }
+        
+        res = self.client().post('/questions', json = new_question)
+        data = json.loads(res.data)
 
+        self.assertEqual(res.status_code, 422)
+        self.assertEqual(data['success'], False) 
+    
+'''
     def test_search_question(self):
          res = 
 
@@ -123,6 +145,7 @@ class TriviaTestCase(unittest.TestCase):
 
     def test_422_failed_play_quiz(self):
         res = 
+'''
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
