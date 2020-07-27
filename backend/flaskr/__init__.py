@@ -170,7 +170,7 @@ def create_app(test_config=None):
       })
 
     except:
-      abort(422)
+      abort(400)
   
   #@DONE: 
   #Create a GET endpoint to get questions based on category. 
@@ -193,7 +193,7 @@ def create_app(test_config=None):
       })
 
     except:
-      abort(422)
+      abort(404)
   
   #@DONE: 
   #Create a POST endpoint to get questions to play the quiz. 
@@ -230,7 +230,7 @@ def create_app(test_config=None):
       })
 
     except:
-      abort(422)
+      abort(400)
 
 
   #@DONE:Create error handlers for all expected errors 
