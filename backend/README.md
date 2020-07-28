@@ -67,23 +67,93 @@ One note before you delve into your tasks: for each endpoint you are expected to
 9. Create error handlers for all expected errors including 400, 404, 422 and 500. 
 
 ## Endpoints
-GET '/categories'
-GET ...
-POST ...
-DELETE ...
+- GET '/categories'
+- GET '/questions'
+- DELETE '/questions/<int:question_id>'
+- POST '/questions'
+- POST '/questions/search'
+- GET '/categories/<int:cat_id>/questions'
+- POST '/quiz'
 
 ### GET '/categories'
-- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
+- Fetches: A dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 - Request Arguments: None
 - Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
+```
 {'1' : "Science",
 '2' : "Art",
 '3' : "Geography",
 '4' : "History",
 '5' : "Entertainment",
 '6' : "Sports"}
+```
+### GET '/questions'
+- Fetches:
+- Request Arguments:
+- Returns:
+```
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  },
+  "questions": [
+    {
+      "answer": "Apollo 13",
+      "category": 5,
+      "difficulty": 4,
+      "id": 2,
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    },
+    {...cut out other questions...}
+  ],
+  "success": true,
+  "total_questions": 18
+}
+```  
+### DELETE '/questions/<int:question_id>'
+- Fetches:
+- Request Arguments:
+- Returns:
+```
+curl output
+```
 
+### POST '/questions'
+- Fetches:
+- Request Arguments:
+- Returns:
+```
+curl output
+```
 
+### POST '/questions/search'
+- Fetches:
+- Request Arguments:
+- Returns:
+```
+curl output
+```
+
+### GET '/categories/<int:cat_id>/questions'
+- Fetches:
+- Request Arguments:
+- Returns:
+```
+curl output
+```
+
+### POST '/quiz'
+- Fetches:
+- Request Arguments:
+- Returns:
+```
+curl output
+```
 
 ## Testing
 To run the tests, run
