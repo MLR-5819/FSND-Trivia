@@ -120,7 +120,21 @@ One note before you delve into your tasks: for each endpoint you are expected to
 - Request Arguments:
 - Returns:
 ```
-curl output
+{
+  "deleted": 6,
+  "questions": [
+    {
+      "answer": "Apollo 13",
+      "category": 5,
+      "difficulty": 4,
+      "id": 2,
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    },
+    {...cut out other questions...}
+  ],
+  "success": true,
+  "total_questions": 17
+}
 ```
 
 ### POST '/questions'
@@ -128,15 +142,41 @@ curl output
 - Request Arguments:
 - Returns:
 ```
-curl output
+{
+  "created": 55,
+  "questions": [
+    {
+      "answer": "Apollo 13",
+      "category": 5,
+      "difficulty": 4,
+      "id": 2,
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    },
+    {...cut out other questions...}
+  ],
+  "success": true,
+  "total_questions": 18
+}
 ```
 
 ### POST '/questions/search'
 - Fetches:
-- Request Arguments:
+- Request Arguments: searchTerm -example used 'grammy'
 - Returns:
 ```
-curl output
+{
+  "questions": [
+    {
+      "answer": "Beyonce, 63 Grammy nominations",
+      "category": 5,
+      "difficulty": 3,
+      "id": 55,
+      "question": "Which female singer has the most Grammy nominations?"
+    }
+  ],
+  "success": true,
+  "total_questions": 1
+}
 ```
 
 ### GET '/categories/<int:cat_id>/questions'
@@ -144,7 +184,41 @@ curl output
 - Request Arguments:
 - Returns:
 ```
-curl output
+{
+  "current_category": "History",
+  "questions": [
+    {
+      "answer": "Maya Angelou",
+      "category": 4,
+      "difficulty": 2,
+      "id": 5,
+      "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
+    },
+    {
+      "answer": "Muhammad Ali",
+      "category": 4,
+      "difficulty": 1,
+      "id": 9,
+      "question": "What boxer's original name is Cassius Clay?"
+    },
+    {
+      "answer": "George Washington Carver",
+      "category": 4,
+      "difficulty": 2,
+      "id": 12,
+      "question": "Who invented Peanut Butter?"
+    },
+    {
+      "answer": "Scarab",
+      "category": 4,
+      "difficulty": 4,
+      "id": 23,
+      "question": "Which dung beetle was worshipped by the ancient Egyptians?"
+    }
+  ],
+  "success": true,
+  "total_questions": 4
+}
 ```
 
 ### POST '/quiz'
@@ -152,7 +226,16 @@ curl output
 - Request Arguments:
 - Returns:
 ```
-curl output
+{
+  "question": {
+    "answer": "The Liver",
+    "category": 1,
+    "difficulty": 4,
+    "id": 20,
+    "question": "What is the heaviest organ in the human body?"
+  },
+  "success": true
+}
 ```
 
 ## Testing
