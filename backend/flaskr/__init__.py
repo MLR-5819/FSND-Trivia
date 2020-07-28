@@ -218,20 +218,20 @@ def create_app(test_config=None):
 
       if len(questions) > 0:
         new_question = questions[random.randrange(0,len(questions))].format()
+
+        return jsonify ({
+          "success": True,
+          "question": new_question
+        })
+
       else:
         return jsonify({
           "success": True,
           "question": None 
         })
 
-      return jsonify ({
-        "success": True,
-        "question": new_question
-      })
-
     except:
       abort(400)
-
 
   #@DONE:Create error handlers for all expected errors 
   #including 404 and 422. 
@@ -258,8 +258,5 @@ def create_app(test_config=None):
       "error": 422,
       "message": "Unprocessable"
     }), 422
-
-    #TODO check if anymore errorhandlers needed
-  
   
   return app
