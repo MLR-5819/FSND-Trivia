@@ -148,7 +148,7 @@ Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` d
 ### POST '/questions/search'
 - Fetches: any question that contains the search term the user enters
 - Request Arguments: searchTerm -example used 'grammy'
-- Returns:
+- Returns: An object containing any question matching the searchTerm, success message, and total number of questions matching the searchTerm.
 ```
 {
   "questions": [
@@ -166,9 +166,9 @@ Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` d
 ```
 
 ### GET '/categories/<int:cat_id>/questions'
-- Fetches:
-- Request Arguments:
-- Returns:
+- Fetches: All questions from the category that the user clicks on
+- Request Arguments: cat_id
+- Returns: An object containing selected category, all questions in that category, success message, and total number of questions in that category.
 ```
 {
   "current_category": "History",
@@ -208,9 +208,9 @@ Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` d
 ```
 
 ### POST '/quiz'
-- Fetches:
-- Request Arguments:
-- Returns:
+- Fetches: A single question from the selected category
+- Request Arguments: Category selection, any previous questions already asked
+- Returns: An object containing the random question from the selected category and a success message.
 ```
 {
   "question": {
